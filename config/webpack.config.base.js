@@ -116,6 +116,8 @@ module.exports = {
       new CleanWebpackPlugin( [ "dist" ] ),
       // 将 css 抽取到某个文件夹
       new ExtractTextPlugin( config.cssOutputPath ),
+      new webpack.NoEmitOnErrorsPlugin(),
+      new webpack.HashedModuleIdsPlugin(),
       // 自动生成 HTML 插件
       ...HTMLPlugins
     ],
