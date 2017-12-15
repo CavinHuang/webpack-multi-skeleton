@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=dev && webpack-dev-server --open",
-    "build": "set NODE_ENV=prod && webpack -p",
+    "dev": "set NODE_ENV=dev && webpack-dev-server --open --progress --color",
+    "build": "set NODE_ENV=prod && webpack -p --progress --color",
     "lint": "set NODE_ENV=lint && webpack-dev-server --open",
-    "serve": "http-server ./dist -p 8888 -o",
-    "serve2": "http-server ./dist -p 8888"
+    "start": "http-server ./dist -p 8888 -o",
+    "start2": "http-server ./dist -p 8888"
   },
   "author": "",
   "license": "ISC",
