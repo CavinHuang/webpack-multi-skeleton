@@ -3,6 +3,7 @@
  * @type {[type]}
  */
 const path = require( "path" );
+const webpack = require( 'webpack' );
 // 引入插件
 const HTMLWebpackPlugin = require( "html-webpack-plugin" );
 // 清理 dist 文件夹
@@ -11,6 +12,8 @@ const CleanWebpackPlugin = require( "clean-webpack-plugin" )
 const ExtractTextPlugin = require( "extract-text-webpack-plugin" );
 // 引入多页面文件列表
 const config = require( "./config" );
+const srcDir = path.resolve( process.cwd(), 'app' );
+const nodeModPath = path.resolve( __dirname, './node_modules' );
 // 通过 html-webpack-plugin 生成的 HTML 集合
 let HTMLPlugins = [];
 // 入口文件集合
@@ -21,11 +24,12 @@ config.HTMLDirs.forEach( ( page ) => {
   const htmlPlugin = new HTMLWebpackPlugin( {
     filename: `${page}.html`,
     template: path.resolve( __dirname, `../app/templates/${page}.${config.tplLang}` ),
-    chunks: [ page, 'commons' ],
+    chunks: [ page, 'vendors' ],
   } );
   HTMLPlugins.push( htmlPlugin );
   Entries[ page ] = path.resolve( __dirname, `../app/static/js/${page}.js` );
 } )
+Entries[ 'vendors' ] = config.library // 第三方类库
 module.exports = {
   entry: Entries,
   devtool: "cheap-module-source-map",
@@ -100,9 +104,14 @@ module.exports = {
         loader: 'html-withimg-loader'
       } ],
   },
+  devtool: 'eval',
   plugins: [
-      // 提取核心代码
-      //new webpack.optimize.CommonsChunkPlugin( 'vendor', 'vendor.js' ),
+    new webpack.optimize.CommonsChunkPlugin( { name: 'vendors', filename: 'vendor.bundle.js' } ),
+    new webpack.DefinePlugin( {
+      'process.env': {
+        NODE_ENV: JSON.stringify( process.env.NODE_ENV )
+      }
+    } ),
       // 自动清理 dist 文件夹
       new CleanWebpackPlugin( [ "dist" ] ),
       // 将 css 抽取到某个文件夹
