@@ -3,5 +3,6 @@
  * @type {Array}
  */
 module.exports = [
-  'index'
+  'index', // index 页面
+  'test/index'
 ];

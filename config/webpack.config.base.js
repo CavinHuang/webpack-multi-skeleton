@@ -20,45 +20,54 @@ let Entries = {}
 config.HTMLDirs.forEach( ( page ) => {
   const htmlPlugin = new HTMLWebpackPlugin( {
     filename: `${page}.html`,
-    template: path.resolve( __dirname, `../app/html/${page}.html` ),
+    template: path.resolve( __dirname, `../app/templates/${page}.${config.tplLang}` ),
     chunks: [ page, 'commons' ],
   } );
   HTMLPlugins.push( htmlPlugin );
-  Entries[ page ] = path.resolve( __dirname, `../app/js/${page}.js` );
+  Entries[ page ] = path.resolve( __dirname, `../app/static/js/${page}.js` );
 } )
-
 module.exports = {
   entry: Entries,
   devtool: "cheap-module-source-map",
   output: {
-    filename: "js/[name].bundle.[hash].js",
-    path: path.resolve( __dirname, "../dist" )
+    filename: "static/js/[name].bundle.[hash].js",
+    path: path.resolve( __dirname, "../dist/" )
   },
   // 加载器
   module: {
     rules: [
       {
-        // 对 css 后缀名进行处理
         test: /\.css$/,
-        // 不处理 node_modules 文件中的 css 文件
         exclude: /node_modules/,
-        // 抽取 css 文件到单独的文件夹
         use: ExtractTextPlugin.extract( {
           fallback: "style-loader",
-          // 设置 css 的 publicPath
           publicPath: config.cssPublicPath,
           use: [
             {
               loader: "css-loader",
               options: {
-                // 开启 css 压缩
-                minimize: true,
+                minimize: true, // 开启 css 压缩
               }
             },
-            {
-              loader: "postcss-loader",
-            } ]
+            { loader: "postcss-loader" } ]
         } )
+      },
+      {
+        test: /\.styl(us)?$/,
+        use: [
+                'style-loader', 'css-loader', {
+            loader: "postcss-loader",
+            options: {
+              plugins: function () {
+                return [ require( 'autoprefixer' ) ];
+              }
+            }
+          }, 'stylus-loader'
+        ]
+      },
+      {
+        test: /\.pug$/,
+        loader: [ 'html-loader', 'pug-html-loader' ]
       },
       {
         test: /\.js$/,
@@ -92,11 +101,13 @@ module.exports = {
       } ],
   },
   plugins: [
-        // 自动清理 dist 文件夹
-        new CleanWebpackPlugin( [ "dist" ] ),
-        // 将 css 抽取到某个文件夹
-        new ExtractTextPlugin( config.cssOutputPath ),
-        // 自动生成 HTML 插件
-        ...HTMLPlugins
+      // 提取核心代码
+      //new webpack.optimize.CommonsChunkPlugin( 'vendor', 'vendor.js' ),
+      // 自动清理 dist 文件夹
+      new CleanWebpackPlugin( [ "dist" ] ),
+      // 将 css 抽取到某个文件夹
+      new ExtractTextPlugin( config.cssOutputPath ),
+      // 自动生成 HTML 插件
+      ...HTMLPlugins
     ],
 }
