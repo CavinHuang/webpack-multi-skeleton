@@ -1,4 +1,5 @@
 # webpack 多页面骨架
+![building](https://www.travis-ci.org/CavinHuang/webpack-multi-skeleton.svg?branch=master "build status")
 ---
 >config目录下都是webpack相关配置
 包含开发环境配置、打包配置、jsLint配置
