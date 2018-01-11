@@ -2,7 +2,7 @@
  * 配置文件
  * @type {[type]}
  */
-const htmlEntry = require( './htmlEntry' );
+const htmlEntry = require('./htmlEntry');
 module.exports = {
   HTMLDirs: htmlEntry,
   cssPublicPath: "../static",
@@ -10,8 +10,5 @@ module.exports = {
   cssOutputPath: "./static/css/styles.css", // bulid 后的css路径
   devServerOutputPath: "../dist", // build后的目录
   tplLang: 'pug', // 模板语法，暂时只支持html、pug
-  library: [
-    './app/libs/common.js',
-    './app/libs/test.css'
-  ],
+  library: ['./app/libs/common.js', './app/libs/test.css'],
 }
