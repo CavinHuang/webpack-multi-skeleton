@@ -32,8 +32,7 @@ function getEntry() {
 	}
 	return entries;
 }
-console.log( getEntry() );
-const pageExtractCssArray = []
+// const pageExtractCssArray = []
 // 生成多页面的集合
 getEntry()
 	.forEach( ( page ) => {
@@ -48,14 +47,25 @@ getEntry()
 		Entries[ moduleNameStr ] = path.resolve( __dirname, `../app/${page}/index.js` );
 		//pageExtractCssArray.push( new ExtractTextPlugin( 'static/css/' + moduleNameStr + '/[name].[contenthash].css' ) )
 	} )
+
+function getVendors() {
+	let globPath = `app/${config.libraryDir}/**/*.*`
+	let files = glob.sync( globPath )
+	let libsArr = []
+	files.forEach( ( v, i ) => {
+		libsArr.push( './' + v )
+	} )
+	return libsArr
+}
+console.log( getVendors() );
 //console.log( pageExtractCssArray );
-Entries[ 'vendors' ] = config.library // 第三方类库
+Entries[ 'vendors' ] = getVendors() // 第三方类库
 let webpackconfig = {
 	entry: Entries,
 	devtool: "cheap-module-source-map",
 	output: {
 		filename: "static/js/[name].bundle.[hash].js",
-		path: path.resolve( __dirname, "../dist/" )
+		path: path.resolve( __dirname, config.devServerOutputPath )
 	},
 	// 加载器
 	module: {
@@ -127,7 +137,7 @@ let webpackconfig = {
 			}
 		} ),
     // 自动清理 dist 文件夹
-    new CleanWebpackPlugin( [ "../dist" ] ),
+    new CleanWebpackPlugin( [ config.devServerOutputPath ] ),
     // 将 css 抽取到某个文件夹
     //...pageExtractCssArray,
     new ExtractTextPlugin( {
