@@ -82,3 +82,75 @@ $ npm start
 ├─  webpack.config.js
 ├─  yarn.lock
 ```
+## 打包后的目录结构如下：
+```
+├─app
+│  ├─libs
+│  │      common.js
+│  │      test.css
+│  │      
+│  ├─static
+│  │  ├─css
+│  │  ├─img
+│  │  │      1.jpg
+│  │  │      
+│  │  └─js
+│  │      └─test
+│  │              index.js
+│  │              
+│  └─templates
+│      ├─test
+│      │  │  index.js
+│      │  │  
+│      │  ├─css
+│      │  │      index.css
+│      │  │      
+│      │  └─html
+│      │          index.pug
+│      │          
+│      └─test0
+│          │  index.js
+│          │  
+│          ├─css
+│          │      index.css
+│          │      
+│          └─html
+│                  index.pug
+│                  
+├─config
+│      config.js
+│      webpack.config.base.js
+│      webpack.config.dev.js
+│      webpack.config.lint.js
+│      webpack.config.prod.js
+│      
+├─dist
+│  │  commons.bundle.js
+│  │  test.html
+│  │  test0.html
+│  │  vendor.bundle.js
+│  │  
+│  └─static
+│      ├─css
+│      │      04e50154927e0a6be02a227c0d77b994.css
+│      │      08d7b51b4ab4894412d8e4d36eb9632c.css
+│      │      c38343268b141a3cde95bccc552e4376.css
+│      │      
+│      └─js
+│          └─templates
+│                  test.bundle.dd711e4715e98405c3fb.js
+│                  test0.bundle.dd711e4715e98405c3fb.js
+│                  
+├─.babelrc
+├─.eslintrc.js
+├─.gitignore
+├─.travis.yml
+├─list.txt
+├─package-lock.json
+├─package.json
+├─postcss.config.js
+├─README.md
+├─webpack.config.js
+├─yarn.lock
+│
+```
