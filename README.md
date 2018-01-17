@@ -27,3 +27,58 @@ $ npm start
 - 调整目录结构
   - static 调整为公共静态资源
   - libs 调整为第三方插件静态资源
+
+## 完整的目录结构如下：
+```
+
+├─app
+│  ├─libs
+│  │      common.js
+│  │      test.css
+│  │      
+│  ├─static
+│  │  ├─css
+│  │  ├─img
+│  │  │      1.jpg
+│  │  │      
+│  │  └─js
+│  │      └─test
+│  │              index.js
+│  │              
+│  └─templates
+│      ├─test
+│      │  │  index.js
+│      │  │  
+│      │  ├─css
+│      │  │      index.css
+│      │  │      
+│      │  └─html
+│      │          index.pug
+│      │          
+│      └─test0
+│          │  index.js
+│          │  
+│          ├─css
+│          │      index.css
+│          │      
+│          └─html
+│                  index.pug
+│                  
+├─config
+│      config.js
+│      webpack.config.base.js
+│      webpack.config.dev.js
+│      webpack.config.lint.js
+│      webpack.config.prod.js
+│      
+├─  .babelrc
+├─  .eslintrc.js
+├─  .gitignore
+├─  .travis.yml
+├─  package-lock.json
+├─  package.json
+├─  postcss.config.js
+├─  README.md
+├─  webpack.config.js
+├─  yarn.lock
+```
