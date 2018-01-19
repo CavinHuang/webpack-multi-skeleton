@@ -1,11 +1,11 @@
 {
-  "name": "htmldemo",
+  "name": "webpack-multi-skeleton",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=dev && webpack-dev-server --open --progress --color",
-    "build": "set NODE_ENV=prod && webpack -p --progress --color",
+    "build": "set NODE_ENV=product && webpack -p --progress --color",
     "lint": "set NODE_ENV=lint && webpack-dev-server --open",
     "start": "http-server ./dist -p 8888 -o",
     "start2": "http-server ./dist -p 8888"

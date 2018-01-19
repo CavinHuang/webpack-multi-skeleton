@@ -11,16 +11,14 @@ const HTMLWebpackPlugin = require( "html-webpack-plugin" );
 const CleanWebpackPlugin = require( "clean-webpack-plugin" )
 // 抽取 css
 const ExtractTextPlugin = require( "extract-text-webpack-plugin" );
-// 引入多页面文件列表
+// 引入配置
 const config = require( "./config" );
-const srcDir = path.resolve( process.cwd(), 'app' );
-const nodeModPath = path.resolve( __dirname, './node_modules' );
 // 通过 html-webpack-plugin 生成的 HTML 集合
 let HTMLPlugins = [];
 // 入口文件集合
 let Entries = {}
 
-function getEntry() {
+function getEntryDir() {
 	let globPath = 'app/templates/**/*.' + config.tplLang
 	// (\/|\\\\) 这种写法是为了兼容 windows和 mac系统目录路径的不同写法
 	let pathDir = 'app(\/|\\\\)(.*?)(\/|\\\\)html'
@@ -32,9 +30,8 @@ function getEntry() {
 	}
 	return entries;
 }
-// const pageExtractCssArray = []
 // 生成多页面的集合
-getEntry()
+getEntryDir()
 	.forEach( ( page ) => {
 		let moduleName = page.split( '/' )
 		let moduleNameStr = moduleName[ moduleName.length - 1 ]
@@ -45,7 +42,6 @@ getEntry()
 		} );
 		HTMLPlugins.push( htmlPlugin );
 		Entries[ moduleNameStr ] = path.resolve( __dirname, `../app/${page}/index.js` );
-		//pageExtractCssArray.push( new ExtractTextPlugin( 'static/css/' + moduleNameStr + '/[name].[contenthash].css' ) )
 	} )
 
 function getVendors() {
@@ -57,8 +53,6 @@ function getVendors() {
 	} )
 	return libsArr
 }
-console.log( getVendors() );
-//console.log( pageExtractCssArray );
 Entries[ 'vendors' ] = getVendors() // 第三方类库
 let webpackconfig = {
 	entry: Entries,
@@ -139,7 +133,6 @@ let webpackconfig = {
     // 自动清理 dist 文件夹
     new CleanWebpackPlugin( [ config.devServerOutputPath ] ),
     // 将 css 抽取到某个文件夹
-    //...pageExtractCssArray,
     new ExtractTextPlugin( {
 			//生成css文件名
 			filename: 'static/css/[name].[contenthash].css',
