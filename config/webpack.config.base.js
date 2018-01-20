@@ -26,22 +26,27 @@ function getEntryDir() {
 	let dirname, entries = []
 	for ( let i = 0; i < files.length; i++ ) {
 		dirname = path.dirname( files[ i ] )
-		entries.push( dirname.replace( new RegExp( '^' + pathDir ), '$2' ) )
+		entries.push( {
+			html: files[ i ],
+			dir: dirname.replace( new RegExp( '^' + pathDir ), '$2' )
+		} )
 	}
 	return entries;
 }
 // 生成多页面的集合
 getEntryDir()
 	.forEach( ( page ) => {
-		let moduleName = page.split( '/' )
+		let moduleName = page.dir.split( '/' )
+		let pathArr = page.html.split( '/' )
+		let fileName = pathArr[ pathArr.length - 1 ].split( '.' )[ 0 ]
 		let moduleNameStr = moduleName[ moduleName.length - 1 ]
 		const htmlPlugin = new HTMLWebpackPlugin( {
-			filename: `${moduleNameStr}.html`,
-			template: path.resolve( __dirname, `../app/${page}/html/index.${config.tplLang}` ),
+			filename: `${moduleNameStr}/${fileName}.html`,
+			template: path.resolve( __dirname, `../${page.html}` ),
 			chunks: [ moduleNameStr, 'vendors' ],
 		} );
 		HTMLPlugins.push( htmlPlugin );
-		Entries[ moduleNameStr ] = path.resolve( __dirname, `../app/${page}/index.js` );
+		Entries[ moduleNameStr ] = path.resolve( __dirname, `../app/${page.dir}/index.js` );
 	} )
 
 function getVendors() {
@@ -53,7 +58,8 @@ function getVendors() {
 	} )
 	return libsArr
 }
-Entries[ 'vendors' ] = getVendors() // 第三方类库
+let vendorsDir = getVendors()
+if ( vendorsDir.length > 0 ) Entries[ 'vendors' ] = vendorsDir // 第三方类库
 let webpackconfig = {
 	entry: Entries,
 	devtool: "cheap-module-source-map",
