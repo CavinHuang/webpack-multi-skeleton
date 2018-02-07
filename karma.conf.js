@@ -8,9 +8,7 @@ module.exports = function ( config ) {
 		// 选择测试框架我们选的‘jasmine’ 可以在这里去找更多相关的框架 https://npmjs.org/browse/keyword/karma-adapter
 		frameworks: [ 'jasmine', 'mocha' ],
 		// 在浏览器中加载的匹配的文件列表 就是我们的第4步
-		files: [
-            'test/**/*.spec.js'
-        ],
+		files: [ 'test/**/*.spec.js' ],
 		// 要排除的文件列表 就是我们的第5步
 		exclude: [],
 		// 在将其提供给浏览器之前，预处理匹配的文件， 可用的预处理器 https://npmjs.org/browse/keyword/karma-preprocessor
@@ -33,7 +31,7 @@ module.exports = function ( config ) {
 					},
 					enforce: 'pre',
 					exclude: /node_modules|\.spec\.js$/,
-                }, {
+				}, {
 					test: /\.js$/,
 					use: {
 						loader: 'babel-loader',
@@ -43,7 +41,7 @@ module.exports = function ( config ) {
 						}
 					},
 					exclude: /node_modules/
-                } ]
+				} ]
 			}
 		},
 		webpackMiddleware: {
@@ -51,13 +49,13 @@ module.exports = function ( config ) {
 		},
 		// 依赖插件
 		plugins: [
-            'karma-chrome-launcher',
-            'karma-jasmine',
-            'karma-mocha',
-            'karma-webpack',
-            'karma-sourcemap-loader',
-            'karma-coverage-istanbul-reporter'
-        ],
+			'karma-chrome-launcher',
+			'karma-jasmine',
+			'karma-mocha',
+			'karma-webpack',
+			'karma-sourcemap-loader',
+			'karma-coverage-istanbul-reporter'
+		],
 		// 怎么显示测试结果 测试结果显示插件https://npmjs.org/browse/keyword/karma-reporter
 		reporters: [ 'coverage-istanbul' ],
 		// 配置覆盖率报告的查看方式配置

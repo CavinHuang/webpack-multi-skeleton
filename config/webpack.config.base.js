@@ -127,7 +127,6 @@ let webpackconfig = {
 	},
 	devtool: 'eval',
 	plugins: [
-
     new webpack.optimize.CommonsChunkPlugin( {
 			name: 'vendors',
 			filename: 'vendor.bundle.js'
@@ -151,5 +150,15 @@ let webpackconfig = {
     // 自动生成 HTML 插件
     ...HTMLPlugins
   ],
+	resolve: {
+		extensions: [ '.js', '.css', '.styl' ],
+		alias: {
+			"@": path.join( __dirname, "../" ),
+			"app": path.join( __dirname, "../app" ),
+			"libs": path.join( __dirname, "../app/libs" ),
+			"static": path.join( __dirname, "../app/static" ),
+			"templates": path.join( __dirname, "../app/templates" ),
+		}
+	}
 }
 module.exports = webpackconfig

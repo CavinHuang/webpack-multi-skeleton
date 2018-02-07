@@ -2,3 +2,4 @@ dist
 bin
 node_modules
 logs
+karam.conf.js
