@@ -103,7 +103,7 @@ let webpackconfig = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-					presets: [ 'env' ]
+					presets: [ 'es2015' ]
 				}
 			}
     }, {
@@ -127,6 +127,7 @@ let webpackconfig = {
 	},
 	devtool: 'eval',
 	plugins: [
+
     new webpack.optimize.CommonsChunkPlugin( {
 			name: 'vendors',
 			filename: 'vendor.bundle.js'
