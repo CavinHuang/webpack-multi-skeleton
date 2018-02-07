@@ -6,7 +6,7 @@ module.exports = function ( config ) {
 		// 将用于解析所有模式的基本路径（例如，文件，排除）ps: 修改它会影响files和exclude路径，没有特殊需求默认就行。
 		basePath: '',
 		// 选择测试框架我们选的‘jasmine’ 可以在这里去找更多相关的框架 https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: [ 'jasmine' ],
+		frameworks: [ 'jasmine', 'mocha' ],
 		// 在浏览器中加载的匹配的文件列表 就是我们的第4步
 		files: [
             'test/**/*.spec.js'
@@ -53,6 +53,7 @@ module.exports = function ( config ) {
 		plugins: [
             'karma-chrome-launcher',
             'karma-jasmine',
+            'karma-mocha',
             'karma-webpack',
             'karma-sourcemap-loader',
             'karma-coverage-istanbul-reporter'
